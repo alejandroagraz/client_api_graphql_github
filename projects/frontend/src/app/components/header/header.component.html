@@ -1,0 +1,27 @@
+<header class="fixed-top navbar-light" id="header">
+        <!-- LOGO -->
+        <nav class="navbar" id="logo">
+          <a class="navbar-brand">
+            <img src="assets/images/angular.svg" class="app-logo" alt="Logotipo" />
+            <span id="brand">
+                <strong>Test</strong>Angular
+            </span>
+          </a>
+        </nav>
+
+        <!-- MENU -->
+        <nav id="menu">
+            <ul>
+              <li>
+                  <a [routerLink]="['/home']" [routerLinkActive]="['active']">Home</a>
+              </li>
+              <li>
+                <a [routerLink]="['/login']" [routerLinkActive]="['active']" (click)="logout()">Logout</a>
+              </li>
+            </ul>
+        </nav>
+
+        <!--LIMPIAR FLOTADOS-->
+<!--  <div class="clearfix"></div>-->
+
+</header>

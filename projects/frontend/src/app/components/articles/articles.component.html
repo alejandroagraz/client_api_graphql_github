@@ -1,0 +1,69 @@
+<div class="clearfix"></div>
+
+<div class="loading" *ngIf="!articles">
+  Loading...
+</div>
+
+<article *ngIf="articles" >
+  <form #userForm="ngForm" (ngSubmit)="onSubmit()">
+    <tr class="row" >
+      <td class="col-3 col-sm-3 col-md-2 col-lg-2">
+        <input type="text" class="form-control" placeholder="Topic" aria-label="Topic" name="topic" #topic="ngModel" [(ngModel)]="articleDto.topic"  required>
+        <div *ngIf="topic.errors && (topic.dirty || topic.touched)">
+          <p class="text-danger" [hidden]="!topic.errors?.['required']">Required field</p>
+        </div>
+      </td>
+      <td class="col-3 col-sm-3 col-md-2 col-lg-2">
+        <input type="text" class="form-control" placeholder="Start" aria-label="Start" name="start" #start="ngModel" [(ngModel)]="articleDto.start"  required>
+        <div *ngIf="start.errors && (start.dirty || start.touched)">
+          <p class="text-danger" [hidden]="!start.errors?.['required']">Required field</p>
+        </div>
+      </td>
+      <td class="col-3 col-sm-3 col-md-2 col-lg-2">
+        <input type="text" class="form-control" placeholder="First" aria-label="First" name="first" #first="ngModel" [(ngModel)]="articleDto.first">
+      </td>
+      <td class="col-3 col-sm-3 col-md-2 col-lg-2">
+        <button type="submit" class="btn btn-primary" id="search" [disabled]="userForm.invalid">Search</button>
+      </td>
+    </tr>
+  </form>
+
+  <table class="table">
+    <thead class="table-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Name Owner</th>
+      <th scope="col">Start Count</th>
+      <th scope="col">Image</th>
+      <th scope="col">Created</th>
+      <th scope="col">Updated</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let article of articles; index as i">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{ article.node.name }}</td>
+      <td *ngIf="article.node.owner.name">{{ article.node.owner.name }}</td>
+      <td *ngIf="!article.node.owner.name && article.node.nameWithOwner">{{ article.node.nameWithOwner }}</td>
+      <td>{{ article.node.stargazerCount }}</td>
+      <td>
+        <img
+          src="{{article.node.owner.avatarUrl}}"
+          alt="{{article.node.owner.name}}"
+          class="me-2"
+          style="width: 20px"
+        />
+      </td>
+      <td>{{ article.node.createdAt | formatDate }}</td>
+      <td>{{ article.node.updatedAt | formatDate }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="loading" *ngIf="articles.length === 0">
+    There are no items to display :)
+  </div>
+
+</article>
+
